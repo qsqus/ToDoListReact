@@ -1,10 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import './ToDoList.css'
 
 function ToDoList() {
-    
-    const [tasks, setTasks] = useState([]);
+
+    const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    const [tasks, setTasks] = useState(savedTasks);
     const [newTask, setNewTask] = useState('');
+
+    // Update localStorage every time tasks value is updated
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
 
     function handleInputChange(event) {
         setNewTask(event.target.value);
@@ -43,30 +50,32 @@ function ToDoList() {
         }
     }
 
-    return (<div className='to-do-list'>
-                <h1>To Do List</h1>
+    return (
+        <div className='to-do-list'>
+            <h1>To Do List</h1>
 
-                <div>
-                    <input 
-                        type='text' 
-                        placeholder='New Task...' 
-                        value={newTask} 
-                        onChange={handleInputChange} 
-                        onKeyDown={handleKeyDown} />
-                    
-                    <button className='add-button' onClick={addTask}> Add </button>
-                </div>
+            <div>
+                <input
+                    type='text'
+                    placeholder='New Task...'
+                    value={newTask}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown} />
 
-                <ol>
-                    {tasks.map((task, i) => 
-                        <li key={i}>
-                            <span className='text'> {task} </span>
-                            <button className='delete-button' onClick={() => deleteTask(i)}> Delete </button>
-                            <button className='move-button' onClick={() => moveTaskUp(i)}> ↑ </button>
-                            <button className='move-button' onClick={() => moveTaskDown(i)}> ↓ </button>
-                       </li>)}
-                </ol>
-            </div>);
+                <button className='add-button' onClick={addTask}> Add </button>
+            </div>
+
+            <ol>
+                {tasks.map((task, i) =>
+                    <li key={i}>
+                        <span className='text'> {task} </span>
+                        <button className='delete-button' onClick={() => deleteTask(i)}> Delete </button>
+                        <button className='move-button' onClick={() => moveTaskUp(i)}> ↑ </button>
+                        <button className='move-button' onClick={() => moveTaskDown(i)}> ↓ </button>
+                    </li>)}
+            </ol>
+        </div>
+    );
 }
 
 export default ToDoList

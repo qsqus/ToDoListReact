@@ -8,6 +8,7 @@ A simple interactive To-Do List app made with React.
 - **Task Removal**: Tasks can be removed from the list by clicking a delete button.
 - **Task Reordering**: Use arrows to rearrange the order.
 - **Task Viewing**: View all tasks in a clean and simple interface.
+- **Task Storage**: Tasks are stored in localStorage to maintain the list across sessions.
 
 ## Preview
 

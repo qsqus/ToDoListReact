@@ -1,42 +1,95 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.to-do-list {
+  font-family: Arial, sans-serif;
   text-align: center;
+  margin-top: 65px;
+
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.title {
+  font-size: 6rem;
+  background-image: linear-gradient(45deg, hsl(181, 88%, 29%), hsl(181, 100%, 60%),  hsl(119, 84%, 70%), hsl(350, 100%, 92%));
+  background-clip: text;
+  color: transparent;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 9px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.add-button {
+  background-color: hsl(125, 56%, 59%);
+
+}
+.add-button:hover {
+  background-color: hsl(125, 56%, 44%);
 }
 
-.card {
-  padding: 2em;
+.delete-button {
+  background-color: hsl(10, 90%, 50%);
+
+}
+.delete-button:hover {
+  background-color: hsl(10, 90%, 35%);
 }
 
-.read-the-docs {
-  color: #888;
+.move-button {
+  background-color: hsl(195, 98%, 55%);
+
+}
+.move-button:hover {
+  background-color: hsl(195, 98%, 35%);
+}
+
+.delete-button, .move-button {
+  margin-left: 10px;
+}
+
+.task-input {
+  font-size: 1.6rem;
+  padding: 10px;
+  border: 2px solid hsl(0, 0%, 54%);
+  border-radius: 5px;
+  color: hsla(0, 0%, 0%, 0.5);
+  width: 30%;
+  max-width: 400px;
+}
+
+.task-list {
+  padding: 0;
+  display: grid;
+  place-items: center;
+  width: 70%;
+  place-self: center;
+  max-width: 900px;
+}
+
+.task {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 15px;
+  background-color: hsl(0, 0%, 80%);
+  margin-bottom: 10px;
+  border: 3px solid hsl(0, 0%, 54%);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.task:hover {
+  transition: background-image 0.2s ease;
+  background-image: linear-gradient(45deg,  hsl(350, 100%, 92%), hsl(119, 84%, 70%), hsl(181, 100%, 60%));
+}
+
+.text {
+  flex: 1;
+  text-align: left;
+  padding-left: 5px;
 }

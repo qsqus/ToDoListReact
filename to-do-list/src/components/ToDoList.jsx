@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import './ToDoList.css'
+import { useState, useEffect, createContext } from 'react'
+import TaskList from './TaskList';
+import TaskInput from './TaskInput';
+import Button from './Button';
+
+export const ButtonsContext = createContext()
 
 function ToDoList() {
 
@@ -17,18 +21,18 @@ function ToDoList() {
         setNewTask(event.target.value);
     }
 
-    function addTask() {
+    function handleAddTask() {
         if (newTask.trim() !== '') {
             setTasks(t => [...t, newTask]);
             setNewTask('')
         }
     }
 
-    function deleteTask(idx) {
+    function handleDeleteTask(idx) {
         setTasks(t => t.filter((_, i) => i !== idx));
     }
 
-    function moveTaskUp(idx) {
+    function handleMoveTaskUp(idx) {
         if (idx > 0) {
             const updatedTasks = [...tasks];
             [updatedTasks[idx], updatedTasks[idx - 1]] = [updatedTasks[idx - 1], updatedTasks[idx]];
@@ -36,7 +40,7 @@ function ToDoList() {
         }
     }
 
-    function moveTaskDown(idx) {
+    function handleMoveTaskDown(idx) {
         if (idx < tasks.length - 1) {
             const updatedTasks = [...tasks];
             [updatedTasks[idx], updatedTasks[idx + 1]] = [updatedTasks[idx + 1], updatedTasks[idx]];
@@ -46,34 +50,33 @@ function ToDoList() {
 
     function handleKeyDown(e) {
         if (e.key === 'Enter') {
-            addTask();
+            handleAddTask();
         }
     }
 
     return (
         <div className='to-do-list'>
-            <h1>To Do List</h1>
+            <h1 className='title'>To Do List</h1>
 
             <div>
-                <input
-                    type='text'
-                    placeholder='New Task...'
-                    value={newTask}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown} />
-
-                <button className='add-button' onClick={addTask}> Add </button>
+                <TaskInput
+                    placeholder={'New Task...'}
+                    newTask={newTask}
+                    handleInputChange={handleInputChange}
+                    handleKeyDown={handleKeyDown}
+                />
+                <Button class='add-button' func={handleAddTask} text={'Add'}/>
             </div>
 
-            <ol>
-                {tasks.map((task, i) =>
-                    <li key={i}>
-                        <span className='text'> {task} </span>
-                        <button className='delete-button' onClick={() => deleteTask(i)}> Delete </button>
-                        <button className='move-button' onClick={() => moveTaskUp(i)}> ↑ </button>
-                        <button className='move-button' onClick={() => moveTaskDown(i)}> ↓ </button>
-                    </li>)}
-            </ol>
+            <ButtonsContext.Provider value={{
+                deleteTask: handleDeleteTask,
+                moveTaskUp: handleMoveTaskUp,
+                moveTaskDown: handleMoveTaskDown
+            }}
+            >
+                <TaskList tasks={tasks} />
+            </ButtonsContext.Provider>
+
         </div>
     );
 }
